@@ -8,8 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.mingren.lib.baselibrary.R;
-import com.mingren.lib.baselibrary.utils.premission.ScreenUtil;
+import com.base.baseenvironment.R;
+import com.base.baseenvironment.utils.premission.ScreenUtil;
+
 
 /**
  * Created by Administrator on 2017/8/9.

@@ -3,6 +3,8 @@ package com.base.baseenvironment;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.base.baseenvironment.utils.ToastUtils;
 
@@ -18,7 +20,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class MyApplication extends Application {
-
+    private static final String TAG = "MyApplication";
     List<Activity> activityList = new ArrayList<Activity>();
     public static Retrofit retrofit;
     public static String HOST = "https://technology.zhongyuedu.com/";
@@ -26,7 +28,10 @@ public class MyApplication extends Application {
     public static void setHost(String host){
         HOST = host;
     }
+    /** 当前的activity */
+    public Activity currentActivity;
 
+    MyActivityLifecycleCallbacks myActivityLifecycleCallbacks = new MyActivityLifecycleCallbacks();
     public static Retrofit getRetrofit(){
         // 初始化网络框架
         if (retrofit == null){
@@ -43,7 +48,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        registerActivityLifecycleCallbacks(myActivityLifecycleCallbacks);
 
     }
 
@@ -74,6 +79,36 @@ public class MyApplication extends Application {
             ToastUtils.showToast(this, "再次点击退出应用！");
         } else {
             removeAllActivity();
+        }
+    }
+
+
+    /**
+     * 监听Activity的生命周期
+     */
+    class MyActivityLifecycleCallbacks implements ActivityLifecycleCallbacks {
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        }
+        @Override
+        public void onActivityStarted(Activity activity) {
+        }
+        @Override
+        public void onActivityResumed(Activity activity) {
+            currentActivity = activity;
+            Log.d(TAG, "当前的Activity是:" + currentActivity.getClass());
+        }
+        @Override
+        public void onActivityPaused(Activity activity) {
+        }
+        @Override
+        public void onActivityStopped(Activity activity) {
+        }
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+        }
+        @Override
+        public void onActivityDestroyed(Activity activity) {
         }
     }
 
